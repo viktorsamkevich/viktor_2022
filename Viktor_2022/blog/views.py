@@ -1,28 +1,22 @@
 from django.shortcuts import render
-from .models import Category
-from .models import Post
-from .models import Comment
+from .models import Post, Comment
+#from .forms import CommentForm
 
 
 def blog_index(request):
-    category = Category.objects.all()
-    post = Post.objects.all()
-    comment = Comment.objects.all()
+    posts = Post.objects.all().order_by('-created_on')
     context = {
-        'category': category,
-        'post': post,
-        'comment': comment
+        "posts": posts,
     }
-    return render(request, 'blog_index.html', context)
+    return render(request, "blog_index.html", context)
 
 
-def blog_details(request, pk):
-    category = Category.objects.get(pk=pk)
+def blog_detail(request, pk):
     post = Post.objects.get(pk=pk)
-    comment = Comment.objects.get(pk=pk)
+    comments = Comment.objects.filter(post=post)
     context = {
-        'category': category,
-        'post': post,
-        'comment': comment
+        "post": post,
+        "comments":comments,
     }
-    return render(request, 'blog_details.html', context)
+
+    return render(request, "blog_details.html", context)
