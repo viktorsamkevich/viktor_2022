@@ -1,0 +1,26 @@
+<html>
+<head></head>
+<body>{% extends "base.html" %}
+{% load static %}
+{% block page_content %}
+<h1>Мой блог‹</h1>
+<div class="row">
+    {% for blog in blogs %}
+    {% for post in posts %}
+    {% for comment in comments %}
+
+    <div class="col-md-4">
+        <div class="card mb-2">
+            <img class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">{{ post.title }}</h5>
+                <p class="card-text">{{ post.body }}</p>
+                <a href="{% url 'blog_details' blog.pk %}" class="btn btn-primary">
+                    подробнее
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}</body></html>
